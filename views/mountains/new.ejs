@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Mountain</title>
+</head>
+<body>
+  <form action="/mountains" method="post">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="mountain[name]">
+    </div>
+    <div>
+      <label for="location">Location</label>
+      <input type="text" id="location" name="mountain[location]">
+    </div>
+    <div>
+      <label for="price">Lift ticket price</label>
+      <input type="text" id="price" name="mountain[price]">
+    </div>
+    <div>
+      <label for="vertical">Vertical rise</label>
+      <input type="text" id="vertical" name="mountain[vertical]">
+    </div>
+    <div>
+      <label for="elevation">Peak elevation</label>
+      <input type="text" id="elevation" name="mountain[elevation]">
+    </div>
+    <div>
+      <label for="acreage">Skiable acreage</label>
+      <input type="text" id="acreage" name="mountain[acreage]">
+    </div>
+    <div>
+      <label for="snowfall">Annual snowfall &#40inches&#41</label>
+      <input type="text" id="snowfall" name="mountain[snowfall]">
+    </div>
+    <div>
+      <label for="pass">Season Passes</label>
+      <input type="checkbox" id="pass" name="mountain[pass]">
+    </div>
+  </form>
+</body>
+</html>

@@ -20,19 +20,22 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.get('/makemountain', async (req, res) => {
-  const mountain  = new Mountain({
-    name: 'Kicking Horse',
-    location: 'Golden, BC',
-    price: '(CAD) $149 - $189',
-    vertical: '4,314',
-    acreage: '3,400',
-    elevation: '8,218',
-    snowfall: '288',
-    pass: ['RCR', 'epic', 'super pass'] 
-  });
-  await mountain.save();
-  res.send(mountain);
+app.get('/mountains', async (req, res) => {
+  const mountains = await Mountain.find({});
+  res.render('mountains/index', { mountains });
+})
+
+app.get('/mountains/new', (req, res) => {
+  res.render('mountains/new');
+})
+
+app.get('/mountains/:id', async (req, res) => {
+  const mountain = await Mountain.findById(req.params.id);
+  res.render('mountains/show', { mountain });
+})
+
+app.post('/mountains', async (req, res) => {
+  
 })
 
 app.listen(3000, () => {
