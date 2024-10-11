@@ -10,14 +10,14 @@ const MountainSchema = new Schema({
     type: String,
     required: true
   },
-  price: Number,
-  vertical: Number,
+  price: String,
+  vertical: String,
   pass: {
-    type: String,
+    type: [String],
   },
-  acreage: Number,
-  lifts: Number,
-  snowfall: Number,
+  acreage: String,
+  elevation: String,
+  snowfall: String,
 });
 
 module.exports = mongoose.model('Mountain', MountainSchema);
