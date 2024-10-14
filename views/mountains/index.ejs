@@ -7,6 +7,9 @@
 </head>
 <body>
   <h1>All Mountains</h1>
+  <div>
+    <a href="/mountains/new">Add Mountain</a>
+  </div>
   <ul>
     <% for (let m of mountains) { %>
       <a href="/mountains/<%= m._id %>"><li><%= m.name %></li></a>

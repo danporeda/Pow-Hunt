@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Mountain: <%= mountain.name %></title>
+</head>
+<body>
+  <h1>Edit: <%= mountain.name %> </h1>
+  <form action="/mountains/<%= mountain._id %>?_method=put" method="post">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="mountain[name]" value="<%= mountain.name %>">
+    </div>
+    <div>
+      <label for="location">Location</label>
+      <input type="text" id="location" name="mountain[location]" value="<%= mountain.location %>">
+    </div>
+    <div>
+      <label for="price">Lift ticket price</label>
+      <input type="text" id="price" name="mountain[price]" value="<%= mountain.price %>">
+    </div>
+    <div>
+      <label for="vertical">Vertical rise</label>
+      <input type="text" id="vertical" name="mountain[vertical]" value="<%= mountain.vertical %>">
+    </div>
+    <div>
+      <label for="elevation">Peak elevation</label>
+      <input type="text" id="elevation" name="mountain[elevation]" value="<%= mountain.elevation %>">
+    </div>
+    <div>
+      <label for="acreage">Skiable acreage</label>
+      <input type="text" id="acreage" name="mountain[acreage]" value="<%= mountain.acreage %>">
+    </div>
+    <div>
+      <label for="snowfall">Annual snowfall &#40inches&#41</label>
+      <input type="text" id="snowfall" name="mountain[snowfall]" value="<%= mountain.snowfall %>">
+    </div>
+    <div>
+      <fieldset>
+        <legend>Season Passes</legend>
+        <div>
+          <input type="checkbox" id="ikon" name="mountain[pass]" value="ikon" <%= mountain.pass.includes('ikon') && 'checked' %>/>
+          <label for="ikon">Ikon</label>
+        </div>
+        <div>
+          <input type="checkbox" id="epic" name="mountain[pass]" value="epic" <%= mountain.pass.includes('epic') && 'checked' %> />
+          <label for="epic">Epic</label>
+        </div>
+        <div>
+          <input type="checkbox" id="mountain-collective" name="mountain[pass]" value="mountain-collective" <%= mountain.pass.includes('mountain-collective') && 'checked' %> />
+          <label for="mountain-collective">Mountain Collective</label>
+        </div>
+        <div>
+          <input type="checkbox" id="RCR" name="mountain[pass]" value="RCR" <%= mountain.pass.includes('RCR') && 'checked' %> />
+          <label for="RCR">Resorts of the Canadian Rockies</label>
+        </div>
+        <div>
+          <input type="checkbox" id="super-pass" name="mountain[pass]" value="super pass" <%= mountain.pass.includes('super pass') && 'checked' %> />
+          <label for="super-pass">Super Pass</label>
+        </div>
+      </fieldset>
+    </div>
+    <button>Submit</button>
+  </form>
+  <a href="/mountains/<%= mountain._id %>">Back to <%= mountain.name %></a>
+</body>
+</html>
