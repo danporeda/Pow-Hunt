@@ -14,7 +14,8 @@ db.once("open", () => {
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -35,7 +36,7 @@ app.get('/mountains/:id', async (req, res) => {
 })
 
 app.post('/mountains', async (req, res) => {
-  
+  console.log(req.body);
 })
 
 app.listen(3000, () => {

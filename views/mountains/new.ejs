@@ -36,9 +36,27 @@
       <input type="text" id="snowfall" name="mountain[snowfall]">
     </div>
     <div>
-      <label for="pass">Season Passes</label>
-      <input type="checkbox" id="pass" name="mountain[pass]">
+      <fieldset>
+        <legend>Season Passes</legend>
+        <div>
+          <input type="checkbox" id="ikon" name="mountain[pass]" value="ikon" />
+          <label for="ikon">Ikon</label>
+        </div>
+        <div>
+          <input type="checkbox" id="epic" name="mountain[pass]" value="epic" />
+          <label for="epic">Epic</label>
+        </div>
+        <div>
+          <input type="checkbox" id="mountain-collective" name="mountain[pass]" value="mountain-collective" />
+          <label for="mountain-collective">Mountain Collective</label>
+        </div>
+        <div>
+          <input type="checkbox" id="RCR" name="mountain[pass]" value="RCR" />
+          <label for="RCR">Resorts of the Canadian Rockies</label>
+        </div>
+      </fieldset>
     </div>
+    <button>Submit</button>
   </form>
 </body>
 </html>
