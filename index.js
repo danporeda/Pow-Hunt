@@ -56,9 +56,10 @@ app.put('/mountains/:id', async (req, res) => {
 
 app.delete('/mountains/:id', async (req, res) => {
   const { id } = req.params;
-  await Mountain.findByIdAndDelete(id);
+  const mountain = await Mountain.findByIdAndDelete(id);
   console.log(id);
   res.redirect('/mountains');
+  console.log(`${mountain.name} has been deleted`)
 })
 
 app.listen(3000, () => {
