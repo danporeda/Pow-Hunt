@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mountains</title>
-</head>
-<body>
-  <h1>All Mountains</h1>
-  <div>
-    <a href="/mountains/new">Add Mountain</a>
-  </div>
-  <ul>
-    <% for (let m of mountains) { %>
-      <a href="/mountains/<%= m._id %>"><li><%= m.name %></li></a>
-    <% } %>
-  </ul>
-</body>
-</html>
+<% layout('layouts/boilerplate') %>
+<h1>All Mountains</h1>
+<div>
+  <a href="/mountains/new">Add Mountain</a>
+</div>
+<ul>
+  <% for (let m of mountains) { %>
+    <a href="/mountains/<%= m._id %>"><li><%= m.name %></li></a>
+  <% } %>
+</ul>

@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= mountain.name %></title>
-</head>
-<body>
-  <h1><%= mountain.name %></h1>
-  <h2><%= mountain.location %></h2>
-  <h3>price: <%= mountain.price %></h3>
-  <h3>vertical: <%= mountain.vertical %></h3>
-  <h3>elevation: <%= mountain.elevation %></h3>
-  <h3>acreage: <%= mountain.acreage %></h3>
-  <h3>snowfall: <%= mountain.snowfall %></h3>
-  <h3>passes: <%= mountain.pass || 'N/A' %></h3>
-  <div><a href="/mountains/<%= mountain._id %>/edit">Edit Mountain</a></div>
-  <p>
-    <form action="/mountains/<%= mountain._id %>?_method=DELETE" method="post">
-      <button style="background-color: red; color: white;">!!! Delete Mountain !!!</button>
-    </form>
-  </p>
-  <footer><a href="/mountains">All Mountains</a></footer>
-</body>
-</html>
+<% layout('layouts/boilerplate') %>
+<h1><%= mountain.name %></h1>
+<h2><%= mountain.location %></h2>
+<h3>price: <%= mountain.price %></h3>
+<h3>vertical: <%= mountain.vertical %></h3>
+<h3>elevation: <%= mountain.elevation %></h3>
+<h3>acreage: <%= mountain.acreage %></h3>
+<h3>snowfall: <%= mountain.snowfall %></h3>
+<h3>passes: <%= mountain.pass || 'N/A' %></h3>
+<div><a href="/mountains/<%= mountain._id %>/edit">Edit Mountain</a></div>
+<p>
+  <form action="/mountains/<%= mountain._id %>?_method=DELETE" method="post">
+    <button style="background-color: red; color: white;">!!! Delete Mountain !!!</button>
+  </form>
+</p>
+<footer><a href="/mountains">All Mountains</a></footer>
