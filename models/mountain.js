@@ -18,6 +18,7 @@ const MountainSchema = new Schema({
   acreage: String,
   elevation: String,
   snowfall: String,
+  image: String
 });
 
 module.exports = mongoose.model('Mountain', MountainSchema);

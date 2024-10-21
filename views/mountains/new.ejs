@@ -1,54 +1,74 @@
 <% layout('layouts/boilerplate') %>
-<form action="/mountains" method="post">
-  <div>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="mountain[name]">
-  </div>
-  <div>
-    <label for="location">Location</label>
-    <input type="text" id="location" name="mountain[location]">
-  </div>
-  <div>
-    <label for="price">Lift ticket price</label>
-    <input type="text" id="price" name="mountain[price]">
-  </div>
-  <div>
-    <label for="vertical">Vertical rise</label>
-    <input type="text" id="vertical" name="mountain[vertical]">
-  </div>
-  <div>
-    <label for="elevation">Peak elevation</label>
-    <input type="text" id="elevation" name="mountain[elevation]">
-  </div>
-  <div>
-    <label for="acreage">Skiable acreage</label>
-    <input type="text" id="acreage" name="mountain[acreage]">
-  </div>
-  <div>
-    <label for="snowfall">Annual snowfall &#40inches&#41</label>
-    <input type="text" id="snowfall" name="mountain[snowfall]">
-  </div>
-  <div>
-    <fieldset>
-      <legend>Season Passes</legend>
-      <div>
-        <input type="checkbox" id="ikon" name="mountain[pass]" value="ikon" />
-        <label for="ikon">Ikon</label>
+<div class="row">
+  <h1 class="text-center">New Mountain</h1>
+  <div class="col-6 offset-3">
+    <form action="/mountains" method="post" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="name">Name</label>
+        <input class="form-control" type="text" id="name" name="mountain[name]" required>
       </div>
-      <div>
-        <input type="checkbox" id="epic" name="mountain[pass]" value="epic" />
-        <label for="epic">Epic</label>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input class="form-control" type="text" id="location" name="mountain[location]" required>
       </div>
-      <div>
-        <input type="checkbox" id="mountain-collective" name="mountain[pass]" value="mountain-collective" />
-        <label for="mountain-collective">Mountain Collective</label>
+      <div class="mb-3">
+        <label class="form-label" for="price">Lift Ticket Price</label>
+        <div class="input-group">
+          <span class="input-group-text" id="price-label">$</span>
+          <input class="form-control" type="text" id="price" placeholder="0.00" name="mountain[price]" required>
+        </div>
       </div>
-      <div>
-        <input type="checkbox" id="RCR" name="mountain[pass]" value="RCR" />
-        <label for="RCR">Resorts of the Canadian Rockies</label>
+      <div class="mb-3">
+        <label class="form-label" for="vertical">Vertical rise</label>
+        <input class="form-control" type="text" id="vertical" name="mountain[vertical]" required>
       </div>
-    </fieldset>
+      <div class="mb-3">
+        <label class="form-label" for="elevation">Peak elevation</label>
+        <input class="form-control" type="text" id="elevation" name="mountain[elevation]" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="acreage">Skiable acreage</label>
+        <input class="form-control" type="text" id="acreage" name="mountain[acreage]" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="snowfall">Annual snowfall &#40;inches&#41;</label>
+        <input class="form-control" type="text" id="snowfall" name="mountain[snowfall]" required>
+      </div>
+      <div class="mb-3">
+        <fieldset class="border p-1">
+          <legend>Season Passes</legend>
+          <div>
+            <input type="checkbox" id="ikon" name="mountain[pass]" value="ikon" />
+            <label for="ikon">Ikon</label>
+          </div>
+          <div>
+            <input type="checkbox" id="epic" name="mountain[pass]" value="epic" />
+            <label for="epic">Epic</label>
+          </div>
+          <div>
+            <input type="checkbox" id="mountain-collective" name="mountain[pass]" value="mountain-collective" />
+            <label for="mountain-collective">Mountain Collective</label>
+          </div>
+          <div>
+            <input type="checkbox" id="RCR" name="mountain[pass]" value="RCR" />
+            <label for="RCR">Resorts of the Canadian Rockies</label>
+          </div>
+          <div>
+            <input type="checkbox" id="super pass" name="mountain[pass]" value="super pass" />
+            <label for="super pass">Super Pass</label>
+          </div>
+          <div>
+            <input type="checkbox" id="SkiBig3" name="mountain[pass]" value="SkiBig3" />
+            <label for="SkiBig3">Ski Big 3</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Image &#40;URL&#41;</label>
+        <input class="form-control" type="text" id="image" name="mountain[image]">
+      </div>
+      <button class="btn btn-success mb-3">Submit</button>
+    </form>
+    <a href="/mountains">Back to all mountains</a>
   </div>
-  <button>Submit</button>
-</form>
-<a href="/mountains">Back to all mountains</a>
+</div>

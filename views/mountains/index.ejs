@@ -5,6 +5,22 @@
 </div>
 <ul>
   <% for (let m of mountains) { %>
-    <a href="/mountains/<%= m._id %>"><li><%= m.name %></li></a>
+    <div class="card">
+      <div class="row">
+        <div class="col-md-4">
+          <img class="img-fluid" src="<%= m.image %>" alt="woah">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><%= m.name %></h5>
+            <p class="card-text"><%= m.location %></p>
+            <p>
+              <small class="text-body-secondary"><%= m.pass.map((p => " " + p)) %></small>
+            </p>
+            <a class="btn btn-primary" href="/mountains/<%= m._id %>">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
   <% } %>
 </ul>

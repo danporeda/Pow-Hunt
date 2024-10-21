@@ -1,16 +1,29 @@
 <% layout('layouts/boilerplate') %>
-<h1><%= mountain.name %></h1>
-<h2><%= mountain.location %></h2>
-<h3>price: <%= mountain.price %></h3>
-<h3>vertical: <%= mountain.vertical %></h3>
-<h3>elevation: <%= mountain.elevation %></h3>
-<h3>acreage: <%= mountain.acreage %></h3>
-<h3>snowfall: <%= mountain.snowfall %></h3>
-<h3>passes: <%= mountain.pass || 'N/A' %></h3>
-<div><a href="/mountains/<%= mountain._id %>/edit">Edit Mountain</a></div>
-<p>
-  <form action="/mountains/<%= mountain._id %>?_method=DELETE" method="post">
-    <button style="background-color: red; color: white;">!!! Delete Mountain !!!</button>
-  </form>
-</p>
-<footer><a href="/mountains">All Mountains</a></footer>
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mb-3">
+      <img src="<%= mountain.image %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><%= mountain.name %></h5>
+        <p class="card-text text-muted"><%= mountain.location %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Vertical: <%= mountain.vertical %> feet</li>
+        <li class="list-group-item">Peak Elevation: <%= mountain.elevation %> feet</li>
+        <li class="list-group-item">Lift ticket: <%= mountain.price %></li>
+        <li class="list-group-item">Acreage: <%= mountain.acreage %></li>
+        <li class="list-group-item">Annual Snowfall: <%= mountain.snowfall %> inches</li>
+        <li class="list-group-item">Passes: <%= mountain.pass.map((p => " " + p)) || 'N/A' %></li>
+      </ul>
+      <div class="card-body">
+        <a href="/mountains/<%= mountain._id %>/edit" class="btn btn-info">Edit moutain details</a>
+        <form class="d-inline" action="/mountains/<%= mountain._id %>?_method=DELETE" method="post">
+          <button class="btn btn-danger">!!! Delete Mountain !!!</button>
+        </form>
+      </div>
+      <div class="card-footer text-muted">
+        <a href="/mountains">All Mountains</a>
+      </div>
+    </div>
+  </div>
+</div>
