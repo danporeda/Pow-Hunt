@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const catchAsync = require('./utils/catchAsync')
 const methodOverride = require('method-override');
 const Mountain = require('./models/mountain');
 
@@ -25,44 +26,44 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.get('/mountains', async (req, res) => {
+app.get('/mountains', catchAsync(async (req, res) => {
   const mountains = await Mountain.find({});
   res.render('mountains/index', { mountains });
-})
+}))
 
 app.get('/mountains/new', (req, res) => {
   res.render('mountains/new');
 })
 
-app.post('/mountains', async (req, res) => {
-  const newMountain = new Mountain(req.body.mountain);
-  await newMountain.save();
-  res.redirect('/mountains');
-})
+app.post('/mountains', catchAsync(async (req, res, next) => {
+    const newMountain = new Mountain(req.body.mountain);
+    await newMountain.save();
+    res.redirect('/mountains');
+}))
 
-app.get('/mountains/:id', async (req, res) => {
+app.get('/mountains/:id', catchAsync(async (req, res) => {
   const mountain = await Mountain.findById(req.params.id);
   res.render('mountains/show', { mountain });
-})
+}))
 
-app.get('/mountains/:id/edit', async (req, res) => {
+app.get('/mountains/:id/edit', catchAsync(async (req, res) => {
   const mountain = await Mountain.findById(req.params.id);
   res.render('mountains/edit', { mountain });
-})
+}))
 
-app.put('/mountains/:id', async (req, res) => {
+app.put('/mountains/:id', catchAsync(async (req, res) => {
   const { id } = req.params;
   await Mountain.findByIdAndUpdate(id, { ...req.body.mountain });
   res.redirect(`/mountains/${id}`);
-})
+}))
 
-app.delete('/mountains/:id', async (req, res) => {
+app.delete('/mountains/:id', catchAsync(async (req, res) => {
   const { id } = req.params;
   const mountain = await Mountain.findByIdAndDelete(id);
   console.log(id);
   res.redirect('/mountains');
   console.log(`${mountain.name} has been deleted`)
-})
+}))
 
 app.use((err, req, res, next) => {
   res.send('oh boy, sum ting went wong');
