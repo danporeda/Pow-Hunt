@@ -64,6 +64,10 @@ app.delete('/mountains/:id', async (req, res) => {
   console.log(`${mountain.name} has been deleted`)
 })
 
+app.use((err, req, res, next) => {
+  res.send('oh boy, sum ting went wong');
+})
+
 app.listen(3000, () => {
   console.log('Serving on Port 3000')
 });

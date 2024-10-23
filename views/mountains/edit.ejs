@@ -3,37 +3,37 @@
 <div class="row">
   <h1 class="text-center">Edit <%= mountain.name %></h1>
   <div class="col-6 offset-3">
-    <form action="/mountains/<%= mountain._id %>?_method=put" method="post">
+    <form action="/mountains/<%= mountain._id %>?_method=put" method="post" novalidate class="validated-form">
       <div class="mb-3">
         <label class="form-label" for="name">Name</label>
-        <input class="form-control" type="text" id="name" name="mountain[name]" value="<%= mountain.name %>">
+        <input class="form-control" type="text" id="name" name="mountain[name]" value="<%= mountain.name %>" required>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
-        <input class="form-control" type="text" id="location" name="mountain[location]" value="<%= mountain.location %>">
+        <input class="form-control" type="text" id="location" name="mountain[location]" value="<%= mountain.location %>" required>
       </div>
       <div class="mb-3">
         <label class="form-label" for="price">Lift Ticket Price</label>
         <div class="input-group">
           <span class="input-group-text" id="price-label">$</span>
-          <input class="form-control" type="text" id="price" placeholder="0.00" name="mountain[price]" value="<%= mountain.price %>">
+          <input class="form-control" type="text" id="price" placeholder="0.00" name="mountain[price]" value="<%= mountain.price %>" required>
         </div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="vertical">Vertical rise</label>
-        <input class="form-control" type="text" id="vertical" name="mountain[vertical]" value="<%= mountain.vertical %>">
+        <input class="form-control" type="text" id="vertical" name="mountain[vertical]" value="<%= mountain.vertical %>" required>
       </div>
       <div class="mb-3">
         <label class="form-label" for="elevation">Peak elevation</label>
-        <input class="form-control" type="text" id="elevation" name="mountain[elevation]" value="<%= mountain.elevation %>">
+        <input class="form-control" type="text" id="elevation" name="mountain[elevation]" value="<%= mountain.elevation %>" required>
       </div>
       <div class="mb-3">
         <label class="form-label" for="acreage">Skiable acreage</label>
-        <input class="form-control" type="text" id="acreage" name="mountain[acreage]" value="<%= mountain.acreage %>">
+        <input class="form-control" type="text" id="acreage" name="mountain[acreage]" value="<%= mountain.acreage %>" required>
       </div>
       <div class="mb-3">
         <label class="form-label" for="snowfall">Annual snowfall &#40;inches&#41;</label>
-        <input class="form-control" type="text" id="snowfall" name="mountain[snowfall]" value="<%= mountain.snowfall %>">
+        <input class="form-control" type="text" id="snowfall" name="mountain[snowfall]" value="<%= mountain.snowfall %>" required>
       </div>
       <div class="mb-3">
         <fieldset class="border p-1">
@@ -73,3 +73,24 @@
     <a href="/mountains/<%= mountain._id %>">Back to <%= mountain.name %></a>
   </div>
 </div>
+
+<!-- <script>
+  (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.validated-form')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script> -->
