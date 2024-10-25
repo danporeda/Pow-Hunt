@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const catchAsync = require('./utils/catchAsync')
+const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const Mountain = require('./models/mountain');
 
@@ -36,6 +37,7 @@ app.get('/mountains/new', (req, res) => {
 })
 
 app.post('/mountains', catchAsync(async (req, res, next) => {
+    if (!req.body.mountain) throw new ExpressError('Invalid campground data', 400);
     const newMountain = new Mountain(req.body.mountain);
     await newMountain.save();
     res.redirect('/mountains');
@@ -66,11 +68,14 @@ app.delete('/mountains/:id', catchAsync(async (req, res) => {
 }))
 
 app.all('*', (req, res, next) => {
-  res.send('404!!!!!!!');
+  next(new ExpressError('Page notttt found', 404));
 })
 
 app.use((err, req, res, next) => {
-  res.send('oh boy, sum ting went wong');
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = 'Oh no, sum ting went wong';
+  res.status(statusCode).render('error', { err });
+  console.log(err.statusCode)
 })
 
 app.listen(3000, () => {
