@@ -65,6 +65,10 @@ app.delete('/mountains/:id', catchAsync(async (req, res) => {
   console.log(`${mountain.name} has been deleted`)
 }))
 
+app.all('*', (req, res, next) => {
+  res.send('404!!!!!!!');
+})
+
 app.use((err, req, res, next) => {
   res.send('oh boy, sum ting went wong');
 })
