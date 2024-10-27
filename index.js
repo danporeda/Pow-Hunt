@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const { mountainSchema } = require('./schemas.js'); 
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -23,6 +24,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validateMountain = (req, res, next) => {
+  const { error } = mountainSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',');
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+}
+
 app.get('/', (req, res) => {
   res.render('home');
 });
@@ -36,8 +47,7 @@ app.get('/mountains/new', (req, res) => {
   res.render('mountains/new');
 })
 
-app.post('/mountains', catchAsync(async (req, res, next) => {
-    if (!req.body.mountain) throw new ExpressError('Invalid campground data', 400);
+app.post('/mountains', validateMountain, catchAsync(async (req, res, next) => {    
     const newMountain = new Mountain(req.body.mountain);
     await newMountain.save();
     res.redirect('/mountains');
@@ -75,7 +85,7 @@ app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Oh no, sum ting went wong';
   res.status(statusCode).render('error', { err });
-  console.log(err.statusCode)
+  console.log({...err});
 })
 
 app.listen(3000, () => {
