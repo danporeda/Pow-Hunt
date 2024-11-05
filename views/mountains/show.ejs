@@ -25,5 +25,25 @@
         <a href="/mountains">All Mountains</a>
       </div>
     </div>
+    <form action="/mountains/<%= mountain._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+      <h2>Leave a Review</h2>
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input type="range" step="0.5" class="form-range" min="0" max="5" name="review[rating]" id="rating">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="body">Review</label>
+        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="5" required></textarea>
+      </div>
+      <button class="btn btn-success">Submit</button>
+    </form>
+    <div>
+      <h2>Reviews</h2>
+      <ul>
+        <% for (let r of mountain.reviews) { %>
+          <li><%= r %></li>
+        <% } %>
+      </ul>
+    </div>
   </div>
 </div>

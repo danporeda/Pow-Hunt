@@ -7,6 +7,7 @@ const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const Mountain = require('./models/mountain');
+const Review = require('./models/review');
 
 mongoose.connect('mongodb://localhost:27017/pow-hunt');
 
@@ -75,6 +76,15 @@ app.delete('/mountains/:id', catchAsync(async (req, res) => {
   console.log(id);
   res.redirect('/mountains');
   console.log(`${mountain.name} has been deleted`)
+}))
+
+app.post('/mountains/:id/reviews', catchAsync(async (req, res) => {
+  const mountain = await Mountain.findById(req.params.id);
+  const review = new Review(req.body.review);
+  await review.save();
+  mountain.reviews.push(review);
+  await mountain.save();
+  res.redirect(`/mountains/${mountain._id}`);
 }))
 
 app.all('*', (req, res, next) => {
