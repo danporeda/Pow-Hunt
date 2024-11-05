@@ -39,11 +39,15 @@
     </form>
     <div>
       <h2>Reviews</h2>
-      <ul>
         <% for (let r of mountain.reviews) { %>
-          <li><%= r %></li>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Rating: <%= r.rating %></h5>
+              <p class="card-text">"<%= r.body %>"</p>
+            </div>
+          </div>
         <% } %>
-      </ul>
+      
     </div>
   </div>
 </div>

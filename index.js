@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const { mountainSchema } = require('./schemas.js'); 
+const { mountainSchema, reviewSchema } = require('./schemas.js'); 
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -35,6 +35,16 @@ const validateMountain = (req, res, next) => {
   }
 }
 
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',');
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+}
+
 app.get('/', (req, res) => {
   res.render('home');
 });
@@ -55,7 +65,7 @@ app.post('/mountains', validateMountain, catchAsync(async (req, res, next) => {
 }))
 
 app.get('/mountains/:id', catchAsync(async (req, res) => {
-  const mountain = await Mountain.findById(req.params.id);
+  const mountain = await Mountain.findById(req.params.id).populate('reviews');
   res.render('mountains/show', { mountain });
 }))
 
@@ -78,7 +88,7 @@ app.delete('/mountains/:id', catchAsync(async (req, res) => {
   console.log(`${mountain.name} has been deleted`)
 }))
 
-app.post('/mountains/:id/reviews', catchAsync(async (req, res) => {
+app.post('/mountains/:id/reviews', validateReview, catchAsync(async (req, res) => {
   const mountain = await Mountain.findById(req.params.id);
   const review = new Review(req.body.review);
   await review.save();
