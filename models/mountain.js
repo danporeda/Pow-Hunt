@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Review = require('./review');
 
 const MountainSchema = new Schema({
   name: {
@@ -26,5 +27,20 @@ const MountainSchema = new Schema({
     }
   ]
 });
+
+MountainSchema.post('findOneAndDelete', async function (mountain) {
+  if (mountain) {
+    await Review.deleteMany({
+      _id: {
+        $in: mountain.reviews
+      }
+    })
+  }
+
+  // if (mountain.reviews.length) {
+  //   const res = await Review.deleteMany({ _id: { $in: mountain.reviews } });
+  //   console.log(res);
+  // }
+})
 
 module.exports = mongoose.model('Mountain', MountainSchema);

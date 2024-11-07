@@ -9,6 +9,8 @@ const methodOverride = require('method-override');
 const Mountain = require('./models/mountain');
 const Review = require('./models/review');
 
+const mountains = require('./routes/mountains');
+
 mongoose.connect('mongodb://localhost:27017/pow-hunt');
 
 const db = mongoose.connection;
@@ -24,16 +26,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-
-const validateMountain = (req, res, next) => {
-  const { error } = mountainSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(',');
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-}
+app.use('/mountains', mountains);
 
 const validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
@@ -49,45 +42,6 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.get('/mountains', catchAsync(async (req, res) => {
-  const mountains = await Mountain.find({});
-  res.render('mountains/index', { mountains });
-}))
-
-app.get('/mountains/new', (req, res) => {
-  res.render('mountains/new');
-})
-
-app.post('/mountains', validateMountain, catchAsync(async (req, res, next) => {    
-    const newMountain = new Mountain(req.body.mountain);
-    await newMountain.save();
-    res.redirect('/mountains');
-}))
-
-app.get('/mountains/:id', catchAsync(async (req, res) => {
-  const mountain = await Mountain.findById(req.params.id).populate('reviews');
-  res.render('mountains/show', { mountain });
-}))
-
-app.get('/mountains/:id/edit', catchAsync(async (req, res) => {
-  const mountain = await Mountain.findById(req.params.id);
-  res.render('mountains/edit', { mountain });
-}))
-
-app.put('/mountains/:id', catchAsync(async (req, res) => {
-  const { id } = req.params;
-  await Mountain.findByIdAndUpdate(id, { ...req.body.mountain });
-  res.redirect(`/mountains/${id}`);
-}))
-
-app.delete('/mountains/:id', catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const mountain = await Mountain.findByIdAndDelete(id);
-  console.log(id);
-  res.redirect('/mountains');
-  console.log(`${mountain.name} has been deleted`)
-}))
-
 app.post('/mountains/:id/reviews', validateReview, catchAsync(async (req, res) => {
   const mountain = await Mountain.findById(req.params.id);
   const review = new Review(req.body.review);
@@ -95,6 +49,13 @@ app.post('/mountains/:id/reviews', validateReview, catchAsync(async (req, res) =
   mountain.reviews.push(review);
   await mountain.save();
   res.redirect(`/mountains/${mountain._id}`);
+}))
+
+app.delete('/mountains/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+  const { id, reviewId } = req.params;
+  await Review.findByIdAndDelete(reviewId);
+  await Mountain.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+  res.redirect(`/mountains/${id}`);
 }))
 
 app.all('*', (req, res, next) => {

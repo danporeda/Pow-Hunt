@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
-  <div class="col-6 offset-3">
+  <div class="col-6">
     <div class="card mb-3">
       <img src="<%= mountain.image %>" class="card-img-top" alt="...">
       <div class="card-body">
@@ -25,6 +25,8 @@
         <a href="/mountains">All Mountains</a>
       </div>
     </div>
+  </div>
+  <div class="col-6">
     <form action="/mountains/<%= mountain._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
       <h2>Leave a Review</h2>
       <div class="mb-3">
@@ -44,10 +46,12 @@
             <div class="card-body">
               <h5 class="card-title">Rating: <%= r.rating %></h5>
               <p class="card-text">"<%= r.body %>"</p>
+              <form action="/mountains/<%= mountain._id %>/reviews/<%= r._id %>?_method=delete" method="POST">
+                <button class="btn btn-danger">Delete review</button>
+              </form>
             </div>
           </div>
         <% } %>
-      
     </div>
   </div>
 </div>
