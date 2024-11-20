@@ -10,6 +10,14 @@
         <a class="nav-link" href="/mountains">Mountains</a>
         <a class="nav-link" href="/mountains/new">New</a>
       </div>
+      <div class="navbar-nav">
+        <% if (!currentUser) { %>
+        <a href="/login" class="nav-link ml-auto">Login</a>
+        <a href="/register" class="nav-link ml-auto">Register</a>
+        <% } else { %>
+        <a href="/logout" class="nav-link ml-auto">Logout</a>
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>

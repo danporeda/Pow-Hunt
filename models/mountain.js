@@ -20,6 +20,10 @@ const MountainSchema = new Schema({
   elevation: String,
   snowfall: String,
   image: String,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   reviews: [
     {
       type: Schema.Types.ObjectId,

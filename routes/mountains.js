@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const Mountain = require('../models/mountain');
 const { mountainSchema } = require('../schemas.js'); 
+const { isLoggedIn } = require('../middleware');
 
 const validateMountain = (req, res, next) => {
   const { error } = mountainSchema.validate(req.body);
@@ -20,15 +21,16 @@ router.get('/', catchAsync(async (req, res) => {
   res.render('mountains/index', { mountains });
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('mountains/new');
 })
 
-router.post('/', validateMountain, catchAsync(async (req, res, next) => {
+router.post('/', isLoggedIn, validateMountain, catchAsync(async (req, res, next) => {
   const { mountain } = req.body;
   if (!mountain.image) {
     mountain.image = 'https://images.megapixl.com/725/7253122.jpg'
-  }
+  };
+  mountain.author = req.user._id;
   const newMountain = new Mountain(mountain);
   await newMountain.save();
   req.flash('success', 'Successfully created a new mountain!')
@@ -36,7 +38,7 @@ router.post('/', validateMountain, catchAsync(async (req, res, next) => {
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {
-  const mountain = await Mountain.findById(req.params.id).populate('reviews');
+  const mountain = await Mountain.findById(req.params.id).populate('reviews').populate('author');
   if (!mountain) {
     req.flash('error', 'Cannot find that mountain');
     return res.redirect('/mountains');
@@ -44,27 +46,35 @@ router.get('/:id', catchAsync(async (req, res) => {
   res.render('mountains/show', { mountain });
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
   const mountain = await Mountain.findById(req.params.id);
   if (!mountain) {
     req.flash('error', 'Cannot find that mountain');
     return res.redirect('/mountains');
   }
+  if (!mountain.author.equals(req.user._id)) {
+    req.flash('error', 'You do not have permission to edit');
+    return res.redirect(`/mountains/${id}`);
+  }
   res.render('mountains/edit', { mountain });
 }))
 
-router.put('/:id', catchAsync(async (req, res) => {
-  const { mountain } = req.body;
-  if (!mountain.image) {
-    mountain.image = 'https://images.megapixl.com/725/7253122.jpg'
-  }
+router.put('/:id', isLoggedIn, validateMountain, catchAsync(async (req, res) => {
   const { id } = req.params;
-  const updatedMountain = await Mountain.findByIdAndUpdate(id, { ...mountain });
+  const mountain = await Mountain.findById(id);
+  if (!mountain.author.equals(req.user._id)) {
+    req.flash('error', 'You do not have permission to edit');
+    return res.redirect(`/mountains/${id}`);
+  }
+  if (!req.body.mountain.image) {
+   req.body.mountain.image = 'https://images.megapixl.com/725/7253122.jpg'
+  }
+  const updatedMountain = await Mountain.findByIdAndUpdate(id, { ...req.body.mountain });
   req.flash('success', `Successfully updated ${updatedMountain.name}`);
   res.redirect(`/mountains/${id}`);
 }))
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
   const { id } = req.params;
   const mountain = await Mountain.findByIdAndDelete(id);
   req.flash('success', `Successfully deleted ${mountain.name}`)

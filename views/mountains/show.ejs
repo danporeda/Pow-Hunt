@@ -14,13 +14,16 @@
         <li class="list-group-item">Acreage: <%= mountain.acreage %></li>
         <li class="list-group-item">Annual Snowfall: <%= mountain.snowfall %> inches</li>
         <li class="list-group-item">Passes: <%= mountain.pass.map((p => " " + p)) || 'N/A' %></li>
+        <li class="list-group-item text-muted">Submitted By: <%= mountain.author.username %></li>
       </ul>
+      <% if (currentUser && mountain.author.equals(currentUser._id)) { %>
       <div class="card-body">
         <a href="/mountains/<%= mountain._id %>/edit" class="btn btn-info">Edit moutain details</a>
         <form class="d-inline" action="/mountains/<%= mountain._id %>?_method=DELETE" method="post">
           <button class="btn btn-danger">!!! Delete Mountain !!!</button>
         </form>
       </div>
+      <% } %>
       <div class="card-footer text-muted">
         <a href="/mountains">All Mountains</a>
       </div>
