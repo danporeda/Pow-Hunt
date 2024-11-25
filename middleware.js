@@ -5,6 +5,9 @@ const Review = require('./models/review');
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
+    // code below moved to index.js middleware
+    // req.session.returnTo = req.originalUrl;
+    console.log(req.originalUrl);
     req.flash('error', 'You must be logged in.');
     return res.redirect('/login');
   }
@@ -51,7 +54,9 @@ module.exports.validateReview = (req, res, next) => {
 module.exports.isReviewAuthor = async (req, res, next) => {
   const { id, reviewId } = req.params;
   const review = await Review.findById(reviewId);
-  if (!review.author.equals(req.user._id)) {
+  console.log('review.author: ',review.author);
+  console.log('req.user', req.user);
+  if (!review.author || !review.author.equals(req.user._id)) {
     req.flash('error', "You cannot delete another person's review");
     return res.redirect(`/mountains/${id}`);
   };
