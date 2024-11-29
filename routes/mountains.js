@@ -7,15 +7,15 @@ const { isLoggedIn, validateMountain, isAuthor } = require('../middleware');
 
 router.route('/')
   .get(catchAsync(mountains.index))
-  .post(isLoggedIn, validateMountain, catchAsync(mountains.createMountain))
+  .post(isLoggedIn, validateMountain, catchAsync(mountains.createMountain));
+
+router.get('/new', isLoggedIn, mountains.renderNewForm);
 
 router.route('/:id')
   .get(catchAsync(mountains.showMountains))
   .put(isLoggedIn, validateMountain, isAuthor, catchAsync(mountains.updateMountain))
-  .delete(isLoggedIn, isAuthor, catchAsync(mountains.deleteMountain))
+  .delete(isLoggedIn, isAuthor, catchAsync(mountains.deleteMountain));
 
-router.get('/new', isLoggedIn, mountains.renderNewForm)
-
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(mountains.renderEditForm))
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(mountains.renderEditForm));
 
 module.exports = router;
