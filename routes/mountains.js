@@ -5,7 +5,8 @@ const catchAsync = require('../utils/catchAsync');
 const Mountain = require('../models/mountain');
 const { isLoggedIn, validateMountain, isAuthor } = require('../middleware');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
 router.route('/')
   .get(catchAsync(mountains.index))
