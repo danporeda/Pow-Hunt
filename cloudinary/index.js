@@ -9,8 +9,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  folder: 'PowHunt',
-  allowedFormats: ['jpeg', 'png', 'jpg']
+  params: {
+    folder: 'PowHunt',
+    allowedFormats: ['jpeg', 'png', 'jpg']
+  }
 });
 
 module.exports = {

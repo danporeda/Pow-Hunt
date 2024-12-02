@@ -10,10 +10,7 @@ const upload = multer({ storage });
 
 router.route('/')
   .get(catchAsync(mountains.index))
-  // .post(isLoggedIn, validateMountain, catchAsync(mountains.createMountain));
-  .post(upload.array('image'), (req, res) => {
-    console.log(req.body, req.files);
-  })
+  .post(isLoggedIn, validateMountain, upload.array('image'), catchAsync(mountains.createMountain));
 
 router.get('/new', isLoggedIn, mountains.renderNewForm);
 

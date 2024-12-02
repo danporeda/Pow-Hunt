@@ -11,9 +11,16 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createMountain = async (req, res, next) => {
   const { mountain } = req.body;
-  if (!mountain.image) {
-    mountain.image = 'https://images.megapixl.com/725/7253122.jpg'
-  };
+  if (req.files.length === 0) {
+    mountain.images = [
+      {
+        url: 'https://images.megapixl.com/725/7253122.jpg',
+        filename: 'stockImg' + Math.random().toString().slice(2)
+      }
+    ];
+  } else {
+    mountain.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+  }
   mountain.author = req.user._id;
   const newMountain = new Mountain(mountain);
   await newMountain.save();

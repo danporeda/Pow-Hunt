@@ -19,6 +19,12 @@ const MountainSchema = new Schema({
   acreage: String,
   elevation: String,
   snowfall: String,
+  images: [
+    {
+    url: String,
+    filename: String
+    }
+  ],
   image: String,
   author: {
     type: Schema.Types.ObjectId,

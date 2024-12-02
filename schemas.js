@@ -10,7 +10,7 @@ module.exports.mountainSchema = Joi.object({
     elevation: Joi.string(),
     snowfall: Joi.string(),
     pass: [Joi.array(), Joi.string()],
-    image: Joi.string().allow(null, '')
+    // image: Joi.string().allow(null, '')
   })
 })
 
