@@ -25,7 +25,6 @@ const MountainSchema = new Schema({
     filename: String
     }
   ],
-  image: String,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User'
