@@ -16,7 +16,7 @@ router.get('/new', isLoggedIn, mountains.renderNewForm);
 
 router.route('/:id')
   .get(catchAsync(mountains.showMountains))
-  .put(isLoggedIn, validateMountain, isAuthor, catchAsync(mountains.updateMountain))
+  .put(isLoggedIn, isAuthor, upload.array('image'), validateMountain, catchAsync(mountains.updateMountain))
   .delete(isLoggedIn, isAuthor, catchAsync(mountains.deleteMountain));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(mountains.renderEditForm));

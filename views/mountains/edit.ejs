@@ -3,7 +3,7 @@
 <div class="row">
   <h1 class="text-center">Edit <%= mountain.name %></h1>
   <div class="col-6 offset-3">
-    <form action="/mountains/<%= mountain._id %>?_method=put" method="post" novalidate class="validated-form">
+    <form action="/mountains/<%= mountain._id %>?_method=put" method="post" novalidate class="validated-form" enctype="multipart/form-data">
       <div class="mb-3">
         <label class="form-label" for="name">Name</label>
         <input class="form-control" type="text" id="name" name="mountain[name]" value="<%= mountain.name %>" required>
@@ -65,8 +65,8 @@
         </fieldset>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="image">Image &#40;URL&#41;</label>
-        <input class="form-control" type="text" id="image" name="mountain[image]" value="<%= mountain.image %>">
+        <label class="form-label" for="image">Add images</label>
+        <input class="form-control" type="file" id="image" name="image" multiple />
       </div>
       <button class="btn btn-info mb-3">Submit</button>
     </form>

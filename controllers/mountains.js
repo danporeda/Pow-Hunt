@@ -54,10 +54,10 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateMountain = async (req, res) => {
   const { id } = req.params;
-  if (!req.body.mountain.image) {
-   req.body.mountain.image = 'https://images.megapixl.com/725/7253122.jpg';
-  }
   const updatedMountain = await Mountain.findByIdAndUpdate(id, { ...req.body.mountain });
+  const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+  updatedMountain.images.push(...imgs);
+  await updatedMountain.save();
   req.flash('success', `Successfully updated ${updatedMountain.name}`);
   res.redirect(`/mountains/${id}`);
 };
