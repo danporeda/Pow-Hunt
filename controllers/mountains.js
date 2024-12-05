@@ -1,4 +1,5 @@
 const Mountain = require('../models/mountain');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
   const mountains = await Mountain.find({});
@@ -58,6 +59,12 @@ module.exports.updateMountain = async (req, res) => {
   const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
   updatedMountain.images.push(...imgs);
   await updatedMountain.save();
+  if (req.body.deleteImages) {
+    for (let filename of req.body.deleteImages) {
+      await cloudinary.uploader.destroy(filename);
+    }
+    await updatedMountain.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+  }
   req.flash('success', `Successfully updated ${updatedMountain.name}`);
   res.redirect(`/mountains/${id}`);
 };

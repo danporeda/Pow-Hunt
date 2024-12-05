@@ -11,7 +11,8 @@ module.exports.mountainSchema = Joi.object({
     snowfall: Joi.string(),
     pass: [Joi.array(), Joi.string()],
     // images: Joi.string().allow(null, '')
-  })
+  }),
+  deleteImages: Joi.array()
 })
 
 module.exports.reviewSchema = Joi.object({

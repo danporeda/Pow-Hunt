@@ -68,29 +68,19 @@
         <label class="form-label custom-file-label" for="image">Add more image(s)</label>
         <input class="form-control" type="file" id="image" name="image" multiple />
       </div>
-      <button class="btn btn-info mb-3">Submit</button>
+      <div class="mb-3">
+        <% mountain.images.forEach(function(image, i) { %>
+          <img src="<%= image.url %>" class="img-thumbnail" alt="">
+          <div class="form-check-inline">
+            <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= image.filename %>">
+            <label for="image-<%= i %>">Delete?</label>
+          </div>
+        <% }) %>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-info mb-3">Update Mountain</button>
+      </div>
     </form>
     <a href="/mountains/<%= mountain._id %>">Back to <%= mountain.name %></a>
   </div>
 </div>
-
-<script>
-  (() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.validated-form')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
-</script>
