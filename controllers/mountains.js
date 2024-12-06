@@ -16,6 +16,7 @@ module.exports.createMountain = async (req, res, next) => {
   const geoData = await maptilerClient.geocoding.forward(req.body.mountain.location, { limit: 1 });
   const mountain = new Mountain(req.body.mountain);
   mountain.geometry = geoData.features[0].geometry;
+  res.send(mountain.geometry);
   // const { mountain } = req.body;
   // if (req.files.length === 0) {
   //   mountain.images = [
