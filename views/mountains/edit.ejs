@@ -70,7 +70,7 @@
       </div>
       <div class="mb-3">
         <% mountain.images.forEach(function(image, i) { %>
-          <img src="<%= image.url %>" class="img-thumbnail" alt="">
+          <img src="<%= image.thumbnail %>" alt="">
           <div class="form-check-inline">
             <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= image.filename %>">
             <label for="image-<%= i %>">Delete?</label>

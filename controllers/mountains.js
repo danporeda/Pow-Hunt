@@ -1,5 +1,7 @@
 const Mountain = require('../models/mountain');
 const { cloudinary } = require('../cloudinary');
+const maptilerClient = require("@maptiler/client");
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.index = async (req, res) => {
   const mountains = await Mountain.find({});
@@ -11,22 +13,25 @@ module.exports.renderNewForm = (req, res) => {
 };
 
 module.exports.createMountain = async (req, res, next) => {
-  const { mountain } = req.body;
-  if (req.files.length === 0) {
-    mountain.images = [
-      {
-        url: 'https://images.megapixl.com/725/7253122.jpg',
-        filename: 'stockImg' + Math.random().toString().slice(2)
-      }
-    ];
-  } else {
-    mountain.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
-  }
-  mountain.author = req.user._id;
-  const newMountain = new Mountain(mountain);
-  await newMountain.save();
-  req.flash('success', 'Successfully created a new mountain!')
-  res.redirect(`/mountains/${newMountain._id}`);
+  const geoData = await maptilerClient.geocoding.forward(req.body.mountain.location, { limit: 1 });
+  const mountain = new Mountain(req.body.mountain);
+  mountain.geometry = geoData.features[0].geometry;
+  // const { mountain } = req.body;
+  // if (req.files.length === 0) {
+  //   mountain.images = [
+  //     {
+  //       url: 'https://images.megapixl.com/725/7253122.jpg',
+  //       filename: 'stockImg' + Math.random().toString().slice(2)
+  //     }
+  //   ];
+  // } else {
+  //   mountain.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+  // }
+  // mountain.author = req.user._id;
+  // const newMountain = new Mountain(mountain);
+  // await newMountain.save();
+  // req.flash('success', 'Successfully created a new mountain!')
+  // res.redirect(`/mountains/${newMountain._id}`);
 }
 
 module.exports.showMountains = async (req, res) => {
