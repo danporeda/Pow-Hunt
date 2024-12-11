@@ -29,7 +29,6 @@ module.exports.createMountain = async (req, res, next) => {
   }
   mountain.author = req.user._id;
   await mountain.save();
-  console.log(mountain.geometry);
   req.flash('success', 'Successfully created a new mountain!')
   res.redirect(`/mountains/${mountain._id}`);
 }
@@ -61,6 +60,8 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateMountain = async (req, res) => {
   const { id } = req.params;
   const updatedMountain = await Mountain.findByIdAndUpdate(id, { ...req.body.mountain });
+  const geoData = await maptilerClient.geocoding.forward(req.body.mountain.location, { limit: 1 });
+  updatedMountain.geometry = geoData.features[0].geometry;
   const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
   updatedMountain.images.push(...imgs);
   await updatedMountain.save();
