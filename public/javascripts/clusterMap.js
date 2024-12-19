@@ -90,6 +90,7 @@ map.on('load', function () {
     map.on('click', 'unclustered-point', function (e) {
         const { popUpMarkup } = e.features[0].properties;
         const coordinates = e.features[0].geometry.coordinates.slice();
+        console.log(e.features[0]);
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
