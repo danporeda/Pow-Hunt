@@ -55,7 +55,8 @@ const MountainSchema = new Schema({
 }, opts);
 
 MountainSchema.virtual('properties.popUpMarkup').get(function() {
-  return `<h3>${this.name}</h3><h4>${this.location}</h4>`
+  return `<strong><a href="/mountains/${this._id}">${this.name}</a></strong>
+  <p>${this.location}</p>`;
 })
 
 MountainSchema.post('findOneAndDelete', async function (mountain) {
