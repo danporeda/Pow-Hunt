@@ -11,6 +11,8 @@ ImageSchema.virtual('thumbnail').get(function() {
   return this.url.replace('/upload', '/upload/w_200')
 });
 
+const opts = { toJSON: { virtuals: true } };
+
 const MountainSchema = new Schema({
   name: {
     type: String,
@@ -50,7 +52,11 @@ const MountainSchema = new Schema({
       ref: 'Review'
     }
   ]
-});
+}, opts);
+
+MountainSchema.virtual('properties.popUpMarkup').get(function() {
+  return `<h3>${this.name}</h3><h4>${this.location}</h4>`
+})
 
 MountainSchema.post('findOneAndDelete', async function (mountain) {
   if (mountain) {
