@@ -85,11 +85,11 @@
               </p>
               <h6 class="card-subtitle mb-2 text-muted">-<%= r.author ? r.author.username : 'Anonymous' %></h6>
               <p class="card-text">"<%= r.body %>"</p>
-               <!-- if (currentUser && currentUser.equals(r.author)) {  -->
+               <% if (currentUser && currentUser.equals(r.author)) { %>
               <form action="/mountains/<%= mountain._id %>/reviews/<%= r._id %>?_method=delete" method="POST">
                 <button class="btn btn-danger">Delete review</button>
               </form>
-              
+              <% } %>
             </div>
           </div>
         <% } %>
