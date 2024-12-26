@@ -1,4 +1,5 @@
 const BaseJoi = require('joi');
+const sanitizeHtml = require('sanitize-html');
 
 const extension = (joi) => ({
   type: 'string',
@@ -24,8 +25,8 @@ const Joi = BaseJoi.extend(extension);
 
 module.exports.mountainSchema = Joi.object({
   mountain: Joi.object({
-    name: Joi.string().required(),
-    location: Joi.string().required(),
+    name: Joi.string().required().escapeHTML(),
+    location: Joi.string().required().escapeHTML(),
     price: Joi.string(),
     vertical: Joi.string(),
     acreage: Joi.string(),
@@ -40,6 +41,6 @@ module.exports.mountainSchema = Joi.object({
 module.exports.reviewSchema = Joi.object({
   review: Joi.object({
     rating: Joi.number().required(),
-    body: Joi.string().required()
+    body: Joi.string().required().escapeHTML()
   })
 })
