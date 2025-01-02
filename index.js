@@ -19,8 +19,9 @@ const helmet = require('helmet');
 const userRoutes = require('./routes/user');
 const mountainRoutes = require('./routes/mountains');
 const reviewRoutes = require('./routes/reviews');
-
-mongoose.connect('mongodb://localhost:27017/pow-hunt');
+const dbUrl = process.env.DB_URL;
+// 'mongodb://localhost:27017/pow-hunt'  local mongoDB
+mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", () => {
