@@ -21,7 +21,7 @@ const mountainRoutes = require('./routes/mountains');
 const reviewRoutes = require('./routes/reviews');
 const dbUrl = process.env.DB_URL;
 // 'mongodb://localhost:27017/pow-hunt'  local mongoDB
-mongoose.connect(dbUrl);
+mongoose.connect('mongodb+srv://centeracupuncture:LmyrtuiRzJ5bz01O@cluster0.vfy5u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", () => {
@@ -29,6 +29,7 @@ db.once("open", () => {
 });
 
 const foo = 'bar';
+const roo = 'tar';
 
 const app = express();
 
