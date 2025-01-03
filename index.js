@@ -28,6 +28,8 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
+const foo = 'bar';
+
 const app = express();
 
 app.engine('ejs', ejsMate);
