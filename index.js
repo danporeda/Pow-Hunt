@@ -19,17 +19,29 @@ const helmet = require('helmet');
 const userRoutes = require('./routes/user');
 const mountainRoutes = require('./routes/mountains');
 const reviewRoutes = require('./routes/reviews');
-const dbUrl = process.env.DB_URL;
-// 'mongodb://localhost:27017/pow-hunt'  local mongoDB
-mongoose.connect('mongodb+srv://centeracupuncture:LmyrtuiRzJ5bz01O@cluster0.vfy5u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", () => {
-  console.log("Database connected");
-});
 
-const foo = 'bar';
-const roo = 'tar';
+const dbUrl = process.env.DB_URL;
+
+// 'mongodb://localhost:27017/pow-hunt'  local mongoDB
+// mongoose.connect(dbUrl);
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error: "));
+// db.once("open", () => {
+//   console.log("Database connected");
+// });
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+async function run() {
+  try {
+    // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+    await mongoose.connect(dbUrl, clientOptions);
+    await mongoose.connection.db.admin().command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoose.disconnect();
+  }
+}
+run().catch(console.dir);
 
 const app = express();
 
