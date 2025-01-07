@@ -23,12 +23,15 @@ const reviewRoutes = require('./routes/reviews');
 const dbUrl = process.env.DB_URL;
 
 // 'mongodb://localhost:27017/pow-hunt'  local mongoDB
-mongoose.connect(dbUrl);
+mongoose.connect('mongodb://localhost:27017/pow-hunt');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", () => {
   console.log("Database connected");
 });
+
+//connection code from Mongo Atlas:
+
 // const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 // async function run() {
 //   try {
@@ -107,6 +110,7 @@ app.use(
         "https://res.cloudinary.com/dk5s5hoqv/",
         "https://images.unsplash.com",
         "https://api.maptiler.com/",
+        "https://kickinghorseresort.com/wp-content/uploads/2016/09/"
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
