@@ -15,7 +15,7 @@ const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
 const User = require('./models/user');
 const helmet = require('helmet');
-
+const MongoStore = require("connect-mongo");
 const userRoutes = require('./routes/user');
 const mountainRoutes = require('./routes/mountains');
 const reviewRoutes = require('./routes/reviews');
@@ -30,22 +30,6 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-//connection code from Mongo Atlas:
-
-// const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
-// async function run() {
-//   try {
-//     // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
-//     await mongoose.connect(dbUrl, clientOptions);
-//     await mongoose.connection.db.admin().command({ ping: 1 });
-//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await mongoose.disconnect();
-//   }
-// }
-// run().catch(console.dir);
-
 const app = express();
 
 app.engine('ejs', ejsMate);
@@ -59,7 +43,20 @@ app.use(mongoSanitize({
   replaceWith: '_',
 }));
 
+const store = MongoStore.create({
+  mongoUrl: 'mongodb://localhost:27017/pow-hunt',
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: 'thisisthesecret'
+  }
+});
+
+store.on("error", function(e){
+  console.log("Session store error: ", e);
+})
+
 const sessionConfig = { 
+  store: store,
   name: 'session',
   secret: 'thisisthesecret', 
   resave: false, 
@@ -110,12 +107,17 @@ app.use(
         "https://res.cloudinary.com/dk5s5hoqv/",
         "https://images.unsplash.com",
         "https://api.maptiler.com/",
-        "https://kickinghorseresort.com/wp-content/uploads/2016/09/"
+        "*.revelstokemountainresort.com/site/assets/files/2937/",
+        "https://www.skilouise.com/",
+        "https://images.megapixl.com/",
+        "https://d3mqmy22owj503.cloudfront.net/15/500315/images/",
+        "https://kickinghorseresort.com/wp-content/"
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
   })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
