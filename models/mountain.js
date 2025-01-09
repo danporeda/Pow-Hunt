@@ -33,14 +33,14 @@ const MountainSchema = new Schema({
       required: true
     }
   },
-  price: String,
-  vertical: String,
+  price: Number,
+  vertical: Number,
   pass: {
     type: [String],
   },
-  acreage: String,
-  elevation: String,
-  snowfall: String,
+  acreage: Number,
+  elevation: Number,
+  snowfall: Number,
   images: [ImageSchema],
   author: {
     type: Schema.Types.ObjectId,
