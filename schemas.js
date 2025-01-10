@@ -27,11 +27,14 @@ module.exports.mountainSchema = Joi.object({
   mountain: Joi.object({
     name: Joi.string().required().escapeHTML(),
     location: Joi.string().required().escapeHTML(),
-    price: Joi.string(),
-    vertical: Joi.string(),
-    acreage: Joi.string(),
-    elevation: Joi.string(),
-    snowfall: Joi.string(),
+    price: Joi.object({
+      type: Joi.string(),
+      curr: Joi.string()
+    }),
+    vertical: Joi.number(),
+    acreage: Joi.number(),
+    elevation: Joi.number(),
+    snowfall: Joi.number(),
     pass: [Joi.array(), Joi.string()],
     // images: Joi.string().allow(null, '')
   }),

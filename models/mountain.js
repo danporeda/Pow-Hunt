@@ -33,7 +33,13 @@ const MountainSchema = new Schema({
       required: true
     }
   },
-  price: Number,
+  price: {
+    type: Number,
+    curr: {
+      type: String,
+      enum: ['USD', 'CAD', 'EURO']
+    }
+  },
   vertical: Number,
   pass: {
     type: [String],

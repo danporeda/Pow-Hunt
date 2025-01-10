@@ -14,8 +14,13 @@
       <div class="mb-3">
         <label class="form-label" for="price">Lift Ticket Price</label>
         <div class="input-group">
-          <span class="input-group-text" id="price-label">$</span>
-          <input class="form-control" type="text" id="price" placeholder="0.00" name="mountain[price]" required>
+          <span class="input-group-text" id="price-label">
+            <input type="radio" id="USD" name="mountain[price][curr]" value="USD"/>
+            <label for="USD">USD</label>
+            <input type="radio" id="CAD" name="mountain[price][curr]" value="CAD"/>
+            <label for="USD">CAD</label>
+          </span>
+          <input class="form-control" type="text" id="price" placeholder="0.00" name="mountain[price][type]" required>
         </div>
       </div>
       <div class="mb-3">
