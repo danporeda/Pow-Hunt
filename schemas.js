@@ -28,7 +28,7 @@ module.exports.mountainSchema = Joi.object({
     name: Joi.string().required().escapeHTML(),
     location: Joi.string().required().escapeHTML(),
     price: Joi.object({
-      type: Joi.string(),
+      cost: Joi.number(),
       curr: Joi.string()
     }),
     vertical: Joi.number(),

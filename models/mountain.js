@@ -34,7 +34,9 @@ const MountainSchema = new Schema({
     }
   },
   price: {
-    type: Number,
+    cost: {
+      type: Number
+    },
     curr: {
       type: String,
       enum: ['USD', 'CAD', 'EURO']
