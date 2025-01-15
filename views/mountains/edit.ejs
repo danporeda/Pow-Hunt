@@ -15,8 +15,13 @@
       <div class="mb-3">
         <label class="form-label" for="price">Lift Ticket Price</label>
         <div class="input-group">
-          <span class="input-group-text" id="price-label">$USD</span>
-          <input class="form-control" type="number" id="price" placeholder="0.00" name="mountain[price]" value="<%= mountain.price %>" required>
+          <span class="input-group-text" id="price-label">
+            <input type="radio" id="USD" name="mountain[price][curr]" value="USD" <%= mountain.price.curr === 'USD' && "checked" %>/>
+            <label for="USD">USD</label>
+            <input type="radio" id="CAD" name="mountain[price][curr]" value="CAD" <%= mountain.price.curr === 'CAD' && "checked" %> />
+            <label for="USD">CAD</label>
+          </span>
+          <input class="form-control" type="number" id="price" placeholder="0.00" name="mountain[price][cost]" value="<%= mountain.price.cost %>" required>
         </div>
       </div>
       <div class="mb-3">
