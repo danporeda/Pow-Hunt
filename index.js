@@ -44,7 +44,7 @@ app.use(mongoSanitize({
 }));
 
 const store = MongoStore.create({
-  mongoUrl: 'mongodb://localhost:27017/pow-hunt',
+  mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: 'thisisthesecret'
